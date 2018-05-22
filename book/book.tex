@@ -30,10 +30,10 @@
 \usepackage[bookmarks]{hyperref}
 
 \title{Think Python}
-\author{Allen B. Downey}
+\author{Allen B. Downey, Philip Ulrich}
 \newcommand{\thetitle}{Think Python: How to Think Like a Computer Scientist}
-\newcommand{\theversion}{2nd Edition, Version 2.2.23}
-\newcommand{\thedate}{}
+\newcommand{\theversion}{Austin Community College - ITSE 1402}
+\newcommand{\thedate}{v1.0 - Spring 2018}
 
 % these styles get translated in CSS for the HTML version
 \newstyle{a:link}{color:black;}
@@ -141,7 +141,7 @@
 
 
 {\Large
-Allen Downey\\
+Allen Downey, Philip Ulrich\\
 }
 
 
@@ -213,8 +213,17 @@ The \LaTeX\ source for this book is available from
 \fi
 % END OF THE PART WE SKIP FOR PLASTEX
 
-
 \chapter{Preface}
+
+\section*{A quick note from Philip}
+
+I have made a special edition of this book for ITSE-1402 at Austin Community 
+College. This version has parts removed that we do not need as well as 
+information added. This includes links to our assignments and modified 
+questions. Please do note that if you try to use the original version
+instead of this one, you will get lost. With that being said, keep in
+mind that most of the content is the original version written by Allen 
+Downey.
 
 \section*{The strange history of this book}
 
@@ -312,10 +321,6 @@ The second edition of {\em Think Python} has these new features:
 \item I added a few sections, and more details on the web, to help
 beginners get started running Python in a browser, so you don't have
 to deal with installing Python until you want to.
-
-\item For Chapter~\ref{turtle} I switched from my own turtle graphics
-  package, called Swampy, to a more standard Python module, {\tt
-    turtle}, which is easier to install and more powerful.
 
 \item I added a new chapter called ``The Goodies'', which introduces
 some additional Python features that are not strictly necessary, but
@@ -2771,8 +2776,6 @@ two statements in the body of this function, not four.
 
 \end{enumerate}
 
-Solution: \url{http://thinkpython2.com/code/do_four.py}.
-
 \end{exercise}
 
 
@@ -2824,723 +2827,6 @@ The output from the next print statement would begin on the next line.
 with four rows and four columns.
 
 \end{enumerate}
-
-Solution: \url{http://thinkpython2.com/code/grid.py}.
-Credit: This exercise is based on an exercise in Oualline, {\em
-    Practical C Programming, Third Edition}, O'Reilly Media, 1997.
-
-\end{exercise}
-
-
-
-
-
-\chapter{Case study: interface design}
-\label{turtlechap}
-
-This chapter presents a case study that demonstrates a process for
-designing functions that work together.
-
-It introduces the {\tt turtle} module, which allows you to
-create images using turtle graphics.  The {\tt turtle} module is
-included in most Python installations, but if you are running Python
-using PythonAnywhere, you won't be able to run the turtle examples (at
-least you couldn't when I wrote this).
-
-If you have already installed Python on your computer, you should
-be able to run the examples.  Otherwise, now is a good time
-to install.  I have posted instructions at
-\url{http://tinyurl.com/thinkpython2e}.
-
-Code examples from this chapter are available from
-\url{http://thinkpython2.com/code/polygon.py}.
-
-
-\section{The turtle module}
-\label{turtle}
-
-To check whether you have the {\tt turtle} module, open the Python
-interpreter and type
-
-\begin{verbatim}
->>> import turtle
->>> bob = turtle.Turtle()
-\end{verbatim}
-
-When you run this code, it should create a new window
-with small arrow that represents the turtle.  Close the window.
-
-Create a file named {\tt mypolygon.py} and type in the following
-code:
-
-\begin{verbatim}
-import turtle
-bob = turtle.Turtle()
-print(bob)
-turtle.mainloop()
-\end{verbatim}
-%
-The {\tt turtle} module (with a lowercase 't') provides a function
-called {\tt Turtle} (with an uppercase 'T') that creates a Turtle
-object, which we assign to a variable named {\tt bob}.
-Printing {\tt bob} displays something like:
-
-\begin{verbatim}
-<turtle.Turtle object at 0xb7bfbf4c>
-\end{verbatim}
-%
-This means that {\tt bob} refers to an object with type
-{\tt Turtle}
-as defined in module {\tt turtle}.
-
-\verb"mainloop" tells the window to wait for the user
-to do something, although in this case there's not much for
-the user to do except close the window.
-
-Once you create a Turtle, you can call a {\bf method} to move it
-around the window.  A method is similar to a function, but it
-uses slightly different syntax.  For example, to move the turtle
-forward:
-
-\begin{verbatim}
-bob.fd(100)
-\end{verbatim}
-%
-The method, {\tt fd}, is associated with the turtle
-object we're calling {\tt bob}.  
-Calling a method is like making a request: you are asking {\tt bob}
-to move forward.
-
-The argument of {\tt fd} is a distance in pixels, so the actual
-size depends on your display.
-
-Other methods you can call on a Turtle are {\tt bk} to move
-backward, {\tt lt} for left turn, and {\tt rt} right turn.  The
-argument for {\tt lt} and {\tt rt} is an angle in degrees.
-
-Also, each Turtle is holding a pen, which is
-either down or up; if the pen is down, the Turtle leaves
-a trail when it moves.  The methods {\tt pu} and {\tt pd}
-stand for ``pen up'' and ``pen down''.
-
-To draw a right angle, add these lines to the program
-(after creating {\tt bob} and before calling \verb"mainloop"):
-
-\begin{verbatim}
-bob.fd(100)
-bob.lt(90)
-bob.fd(100)
-\end{verbatim}
-%
-When you run this program, you should see {\tt bob} move east and then
-north, leaving two line segments behind.
-
-Now modify the program to draw a square.  Don't go on until
-you've got it working!
-
-%\newpage
-
-\section{Simple repetition}
-\label{repetition}
-\index{repetition}
-
-Chances are you wrote something like this:
-
-\begin{verbatim}
-bob.fd(100)
-bob.lt(90)
-
-bob.fd(100)
-bob.lt(90)
-
-bob.fd(100)
-bob.lt(90)
-
-bob.fd(100)
-\end{verbatim}
-%
-We can do the same thing more concisely with a {\tt for} statement.
-Add this example to {\tt mypolygon.py} and run it again:
-\index{for loop}
-\index{loop!for}
-\index{statement!for}
-
-\begin{verbatim}
-for i in range(4):
-    print('Hello!')
-\end{verbatim}
-%
-You should see something like this:
-
-\begin{verbatim}
-Hello!
-Hello!
-Hello!
-Hello!
-\end{verbatim}
-%
-This is the simplest use of the {\tt for} statement; we will see
-more later.  But that should be enough to let you rewrite your
-square-drawing program.  Don't go on until you do.
-
-Here is a {\tt for} statement that draws a square:
-
-\begin{verbatim}
-for i in range(4):
-    bob.fd(100)
-    bob.lt(90)
-\end{verbatim}
-%
-The syntax of a {\tt for} statement is similar to a function
-definition.  It has a header that ends with a colon and an indented
-body.  The body can contain any number of statements.
-
-A {\tt for} statement is also called a {\bf loop} because
-the flow of execution runs through the body and then loops back
-to the top.  In this case, it runs the body four times.
-\index{loop}
-
-This version is actually a little different from the previous
-square-drawing code because it makes another turn after
-drawing the last side of the square.  The extra turn takes
-more time, but it simplifies the code if we do the same thing
-every time through the loop.  This version also has the effect
-of leaving the turtle back in the starting position, facing in
-the starting direction.
-
-\section{Exercises}
-
-The following is a series of exercises using TurtleWorld.  They
-are meant to be fun, but they have a point, too.  While you are
-working on them, think about what the point is.
-
-The following sections have solutions to the exercises, so
-don't look until you have finished (or at least tried).
-
-\begin{enumerate}
-
-\item Write a function called {\tt square} that takes a parameter
-named {\tt t}, which is a turtle.  It should use the turtle to draw
-a square.
-
-Write a function call that passes {\tt bob} as an argument to
-{\tt square}, and then run the program again.
-
-\item Add another parameter, named {\tt length}, to {\tt square}.
-Modify the body so length of the sides is {\tt length}, and then
-modify the function call to provide a second argument.  Run the
-program again.  Test your program with a range of values for {\tt
-length}.
-
-\item Make a copy of {\tt square} and change the name to {\tt
-  polygon}.  Add another parameter named {\tt n} and modify the body
-  so it draws an n-sided regular polygon.  Hint: The exterior angles
-  of an n-sided regular polygon are $360/n$ degrees.  \index{polygon
-    function} \index{function!polygon}
-
-\item Write a function called {\tt circle} that takes a turtle, 
-{\tt t}, and radius, {\tt r}, as parameters and that draws an
-approximate circle by calling {\tt polygon} with an appropriate
-length and number of sides.  Test your function with a range of values
-of {\tt r}.  \index{circle function} \index{function!circle}
-
-Hint: figure out the circumference of the circle and make sure that
-{\tt length * n = circumference}.
-
-\item Make a more general version of {\tt circle} called {\tt arc}
-that takes an additional parameter {\tt angle}, which determines
-what fraction of a circle to draw.  {\tt angle} is in units of
-degrees, so when {\tt angle=360}, {\tt arc} should draw a complete
-circle.
-\index{arc function}
-\index{function!arc}
-
-\end{enumerate}
-
-
-\section{Encapsulation}
-
-The first exercise asks you to put your square-drawing code
-into a function definition and then call the function, passing
-the turtle as a parameter.  Here is a solution:
-
-\begin{verbatim}
-def square(t):
-    for i in range(4):
-        t.fd(100)
-        t.lt(90)
-
-square(bob)
-\end{verbatim}
-%
-The innermost statements, {\tt fd} and {\tt lt} are indented twice to
-show that they are inside the {\tt for} loop, which is inside the
-function definition.  The next line, {\tt square(bob)}, is flush with
-the left margin, which indicates the end of both the {\tt for} loop
-and the function definition.
-
-Inside the function, {\tt t} refers to the same turtle {\tt bob}, so
-{\tt t.lt(90)} has the same effect as {\tt bob.lt(90)}.  In that
-case, why not
-call the parameter {\tt bob}?  The idea is that {\tt t} can be any
-turtle, not just {\tt bob}, so you could create a second turtle and
-pass it as an argument to {\tt square}:
-
-\begin{verbatim}
-alice = turtle.Turtle()
-square(alice)
-\end{verbatim}
-%
-Wrapping a piece of code up in a function is called {\bf
-encapsulation}.  One of the benefits of encapsulation is that it
-attaches a name to the code, which serves as a kind of documentation.
-Another advantage is that if you re-use the code, it is more concise
-to call a function twice than to copy and paste the body!
-\index{encapsulation}
-
-
-\section{Generalization}
-
-The next step is to add a {\tt length} parameter to {\tt square}.
-Here is a solution:
-
-\begin{verbatim}
-def square(t, length):
-    for i in range(4):
-        t.fd(length)
-        t.lt(90)
-
-square(bob, 100)
-\end{verbatim}
-%
-Adding a parameter to a function is called {\bf generalization}
-because it makes the function more general: in the previous
-version, the square is always the same size; in this version
-it can be any size.
-\index{generalization}
-
-The next step is also a generalization.  Instead of drawing
-squares, {\tt polygon} draws regular polygons with any number of
-sides.  Here is a solution:
-
-\begin{verbatim}
-def polygon(t, n, length):
-    angle = 360 / n
-    for i in range(n):
-        t.fd(length)
-        t.lt(angle)
-
-polygon(bob, 7, 70)
-\end{verbatim}
-%
-This example draws a 7-sided polygon with side length 70.
-
-If you are using Python 2, the value of {\tt angle} might be off
-because of integer division.  A simple solution is to compute
-{\tt angle = 360.0 / n}.  Because the numerator is a floating-point
-number, the result is floating point.
-\index{Python 2}
-
-When a function has more than a few numeric arguments, it is easy to
-forget what they are, or what order they should be in.  In that case
-it is often a good idea to include the names of the parameters in the
-argument list:
-
-\begin{verbatim}
-polygon(bob, n=7, length=70)
-\end{verbatim}
-%
-These are called {\bf keyword arguments} because they include
-the parameter names as ``keywords'' (not to be confused with
-Python keywords like {\tt while} and {\tt def}).
-\index{keyword argument}
-\index{argument!keyword}
-
-This syntax makes the program more readable.  It is also a reminder
-about how arguments and parameters work: when you call a function, the
-arguments are assigned to the parameters.
-
-
-\section{Interface design}
-
-The next step is to write {\tt circle}, which takes a radius,
-{\tt r}, as a parameter.  Here is a simple solution that uses
-{\tt polygon} to draw a 50-sided polygon:
-
-\begin{verbatim}
-import math
-
-def circle(t, r):
-    circumference = 2 * math.pi * r
-    n = 50
-    length = circumference / n
-    polygon(t, n, length)
-\end{verbatim}
-%
-The first line computes the circumference of a circle with radius
-{\tt r} using the formula $2 \pi r$.  Since we use {\tt math.pi}, we
-have to import {\tt math}.  By convention, {\tt import} statements
-are usually at the beginning of the script.
-
-{\tt n} is the number of line segments in our approximation of a circle,
-so {\tt length} is the length of each segment.  Thus, {\tt polygon}
-draws a 50-sided polygon that approximates a circle with radius {\tt r}.
-
-One limitation of this solution is that {\tt n} is a constant, which
-means that for very big circles, the line segments are too long, and
-for small circles, we waste time drawing very small segments.  One
-solution would be to generalize the function by taking {\tt n} as
-a parameter.  This would give the user (whoever calls {\tt circle})
-more control, but the interface would be less clean.
-\index{interface}
-
-The {\bf interface} of a function is a summary of how it is used: what
-are the parameters?  What does the function do?  And what is the return
-value?  An interface is ``clean'' if it allows the caller to do
-what they want without dealing with unnecessary details.
-
-In this example, {\tt r} belongs in the interface because it
-specifies the circle to be drawn.  {\tt n} is less appropriate
-because it pertains to the details of {\em how} the circle should
-be rendered.
-
-Rather than clutter up the interface, it is better
-to choose an appropriate value of {\tt n}
-depending on {\tt circumference}:
-
-\begin{verbatim}
-def circle(t, r):
-    circumference = 2 * math.pi * r
-    n = int(circumference / 3) + 3
-    length = circumference / n
-    polygon(t, n, length)
-\end{verbatim}
-%
-Now the number of segments is an integer near {\tt circumference/3},
-so the length of each segment is approximately 3, which is small
-enough that the circles look good, but big enough to be efficient,
-and acceptable for any size circle.
-
-Adding 3 to {\tt n} guarantees that the polygon has at least 3 sides.
-
-
-\section{Refactoring}
-\label{refactoring}
-\index{refactoring}
-
-When I wrote {\tt circle}, I was able to re-use {\tt polygon}
-because a many-sided polygon is a good approximation of a circle.
-But {\tt arc} is not as cooperative; we can't use {\tt polygon}
-or {\tt circle} to draw an arc.
-
-One alternative is to start with a copy
-of {\tt polygon} and transform it into {\tt arc}.  The result
-might look like this:
-
-\begin{verbatim}
-def arc(t, r, angle):
-    arc_length = 2 * math.pi * r * angle / 360
-    n = int(arc_length / 3) + 1
-    step_length = arc_length / n
-    step_angle = angle / n
-    
-    for i in range(n):
-        t.fd(step_length)
-        t.lt(step_angle)
-\end{verbatim}
-%
-The second half of this function looks like {\tt polygon}, but we
-can't re-use {\tt polygon} without changing the interface.  We could
-generalize {\tt polygon} to take an angle as a third argument,
-but then {\tt polygon} would no longer be an appropriate name!
-Instead, let's call the more general function {\tt polyline}:
-
-\begin{verbatim}
-def polyline(t, n, length, angle):
-    for i in range(n):
-        t.fd(length)
-        t.lt(angle)
-\end{verbatim}
-%
-Now we can rewrite {\tt polygon} and {\tt arc} to use {\tt polyline}:
-
-\begin{verbatim}
-def polygon(t, n, length):
-    angle = 360.0 / n
-    polyline(t, n, length, angle)
-
-def arc(t, r, angle):
-    arc_length = 2 * math.pi * r * angle / 360
-    n = int(arc_length / 3) + 1
-    step_length = arc_length / n
-    step_angle = float(angle) / n
-    polyline(t, n, step_length, step_angle)
-\end{verbatim}
-%
-Finally, we can rewrite {\tt circle} to use {\tt arc}:
-
-\begin{verbatim}
-def circle(t, r):
-    arc(t, r, 360)
-\end{verbatim}
-%
-This process---rearranging a program to improve
-interfaces and facilitate code re-use---is called {\bf refactoring}.
-In this case, we noticed that there was similar code in {\tt arc} and
-{\tt polygon}, so we ``factored it out'' into {\tt polyline}.
-\index{refactoring}
-
-If we had planned ahead, we might have written {\tt polyline} first
-and avoided refactoring, but often you don't know enough at the
-beginning of a project to design all the interfaces.  Once you start
-coding, you understand the problem better.  Sometimes refactoring is a
-sign that you have learned something.
-
-
-\section{A development plan}
-\index{development plan!encapsulation and generalization}
-
-A {\bf development plan} is a process for writing programs.  The
-process we used in this case study is ``encapsulation and
-generalization''.  The steps of this process are:
-
-\begin{enumerate}
-
-\item Start by writing a small program with no function definitions.
-
-\item Once you get the program working, identify a coherent piece of
-  it, encapsulate the piece in a function and give it a name.
-
-\item Generalize the function by adding appropriate parameters.
-
-\item Repeat steps 1--3 until you have a set of working functions.
-Copy and paste working code to avoid retyping (and re-debugging).
-
-\item Look for opportunities to improve the program by refactoring.
-For example, if you have similar code in several places, consider
-factoring it into an appropriately general function.
-
-\end{enumerate}
-
-This process has some drawbacks---we will see alternatives later---but
-it can be useful if you don't know ahead of time how to divide the
-program into functions.  This approach lets you design as you go
-along.
-
-
-\section{docstring}
-\label{docstring}
-\index{docstring}
-
-A {\bf docstring} is a string at the beginning of a function that
-explains the interface (``doc'' is short for ``documentation'').  Here
-is an example:
-
-\begin{verbatim}
-def polyline(t, n, length, angle):
-    """Draws n line segments with the given length and
-    angle (in degrees) between them.  t is a turtle.
-    """    
-    for i in range(n):
-        t.fd(length)
-        t.lt(angle)
-\end{verbatim}
-%
-By convention, all docstrings are triple-quoted strings, also known
-as multiline strings because the triple quotes allow the string
-to span more than one line.
-\index{quotation mark}
-\index{triple-quoted string}
-\index{string!triple-quoted}
-\index{multiline string}
-\index{string!multiline}
-
-It is terse, but it contains the essential information
-someone would need to use this function.  It explains concisely what
-the function does (without getting into the details of how it does
-it).  It explains what effect each parameter has on the behavior of
-the function and what type each parameter should be (if it is not
-obvious).
-
-Writing this kind of documentation is an important part of interface
-design.  A well-designed interface should be simple to explain;
-if you have a hard time explaining one of your functions,
-maybe the interface could be improved.
-
-
-\section{Debugging}
-\index{debugging}
-\index{interface}
-
-An interface is like a contract between a function and a caller.
-The caller agrees to provide certain parameters and the function
-agrees to do certain work.
-
-For example, {\tt polyline} requires four arguments: {\tt t} has to be
-a Turtle; {\tt n} has to be an
-integer; {\tt length} should be a positive number; and {\tt
-  angle} has to be a number, which is understood to be in degrees.
-
-These requirements are called {\bf preconditions} because they
-are supposed to be true before the function starts executing.
-Conversely, conditions at the end of the function are
-{\bf postconditions}.  Postconditions include the intended
-effect of the function (like drawing line segments) and any
-side effects (like moving the Turtle or making other changes).
-\index{precondition}
-\index{postcondition}
-
-Preconditions are the responsibility of the caller.  If the caller
-violates a (properly documented!) precondition and the function
-doesn't work correctly, the bug is in the caller, not the function.
-
-If the preconditions are satisfied and the postconditions are
-not, the bug is in the function.  If your pre- and postconditions
-are clear, they can help with debugging.
-
-
-\section{Glossary}
-
-\begin{description}
-
-\item[method:] A function that is associated with an object and called
-using dot notation.
-\index{method}
-
-\item[loop:] A part of a program that can run repeatedly.
-\index{loop}
-
-\item[encapsulation:] The process of transforming a sequence of
-statements into a function definition.
-\index{encapsulation}
-
-\item[generalization:] The process of replacing something
-unnecessarily specific (like a number) with something appropriately
-general (like a variable or parameter).
-\index{generalization}
-
-\item[keyword argument:] An argument that includes the name of
-the parameter as a ``keyword''.
-\index{keyword argument}
-\index{argument!keyword}
-
-\item[interface:] A description of how to use a function, including
-the name and descriptions of the arguments and return value.
-\index{interface}
-
-\item[refactoring:] The process of modifying a working program to
-  improve function interfaces and other qualities of the code.
-\index{refactoring}
-
-\item[development plan:] A process for writing programs.
-\index{development plan}
-
-\item[docstring:] A string that appears at the top of a function
-  definition to document the function's interface. 
-\index{docstring}
-
-\item[precondition:] A requirement that should be satisfied by
-the caller before a function starts.
-\index{precondition}
-
-\item[postcondition:] A requirement that should be satisfied by
-the function before it ends.
-\index{precondition}
-
-\end{description}
-
-
-\section{Exercises}
-
-\begin{exercise}
-
-Download the code in this chapter from
-\url{http://thinkpython2.com/code/polygon.py}.
-
-\begin{enumerate}
-
-\item Draw a stack diagram that shows the state of the program
-while executing {\tt circle(bob, radius)}.  You can do the
-arithmetic by hand or add {\tt print} statements to the code.
-\index{stack diagram}
-
-\item The version of {\tt arc} in Section~\ref{refactoring} is not
-very accurate because the linear approximation of the
-circle is always outside the true circle.  As a result,
-the Turtle ends up a few pixels away from the correct
-destination.  My solution shows a way to reduce
-the effect of this error.  Read the code and see if it makes
-sense to you.  If you draw a diagram, you might see how it works.
-
-\end{enumerate}
-
-\end{exercise}
-
-\begin{figure}
-\centerline
-{\includegraphics[scale=0.8]{figs/flowers.pdf}}
-\caption{Turtle flowers.}
-\label{fig.flowers}
-\end{figure}
-
-\begin{exercise}
-\index{flower}
-
-Write an appropriately general set of functions that
-can draw flowers as in Figure~\ref{fig.flowers}.
-
-Solution: \url{http://thinkpython2.com/code/flower.py},
-also requires \url{http://thinkpython2.com/code/polygon.py}.
-
-\end{exercise}
-
-\begin{figure}
-\centerline
-{\includegraphics[scale=0.8]{figs/pies.pdf}}
-\caption{Turtle pies.}
-\label{fig.pies}
-\end{figure}
-
-
-\begin{exercise}
-\index{pie}
-
-Write an appropriately general set of functions that
-can draw shapes as in Figure~\ref{fig.pies}.
-
-Solution: \url{http://thinkpython2.com/code/pie.py}.
-
-\end{exercise}
-
-\begin{exercise}
-\index{alphabet}
-\index{turtle typewriter}
-\index{typewriter, turtle}
-
-The letters of the alphabet can be constructed from a moderate number
-of basic elements, like vertical and horizontal lines and a few
-curves.  Design an alphabet that can be drawn with a minimal
-number of basic elements and then write functions that draw the letters.
-
-You should write one function for each letter, with names
-\verb"draw_a", \verb"draw_b", etc., and put your functions
-in a file named {\tt letters.py}.  You can download a
-``turtle typewriter'' from \url{http://thinkpython2.com/code/typewriter.py}
-to help you test your code.
-
-You can get a solution from \url{http://thinkpython2.com/code/letters.py};
-it also requires
-\url{http://thinkpython2.com/code/polygon.py}.
-
-\end{exercise}
-
-\begin{exercise}
-
-Read about spirals at \url{http://en.wikipedia.org/wiki/Spiral}; then
-write a program that draws an Archimedian spiral (or one of the other
-kinds).  Solution: \url{http://thinkpython2.com/code/spiral.py}.
-\index{spiral}
-\index{Archimedian spiral} 
 
 \end{exercise}
 
@@ -4393,87 +3679,6 @@ recurse(3, 0)
 \end{exercise}
 
 
-The following exercises use the {\tt turtle} module, described in
-Chapter~\ref{turtlechap}:
-\index{TurtleWorld}
-
-\begin{exercise}
-
-Read the following function and see if you can figure out
-what it does (see the examples in Chapter~\ref{turtlechap}).  Then run it 
-and see if you got it right.
-
-\begin{verbatim}
-def draw(t, length, n):
-    if n == 0:
-        return
-    angle = 50
-    t.fd(length*n)
-    t.lt(angle)
-    draw(t, length, n-1)
-    t.rt(2*angle)
-    draw(t, length, n-1)
-    t.lt(angle)
-    t.bk(length*n)
-\end{verbatim}
-
-\end{exercise}
-
-
-\begin{figure}
-\centerline
-{\includegraphics[scale=0.8]{figs/koch.pdf}}
-\caption{A Koch curve.}
-\label{fig.koch}
-\end{figure}
-
-\begin{exercise}
-\index{Koch curve}
-
-The Koch curve is a fractal that looks something like
-Figure~\ref{fig.koch}.  To draw a Koch curve with length $x$, all you
-have to do is
-
-\begin{enumerate}
-
-\item Draw a Koch curve with length $x/3$.
-
-\item Turn left 60 degrees.
-
-\item Draw a Koch curve with length $x/3$.
-
-\item Turn right 120 degrees.
-
-\item Draw a Koch curve with length $x/3$.
-
-\item Turn left 60 degrees.
-
-\item Draw a Koch curve with length $x/3$.
-
-\end{enumerate}
-
-The exception is if $x$ is less than 3: in that case,
-you can just draw a straight line with length $x$.
-
-\begin{enumerate}
-
-\item Write a function called {\tt koch} that takes a turtle and
-a length as parameters, and that uses the turtle to draw a Koch
-curve with the given length.
-
-\item Write a function called {\tt snowflake} that draws three
-Koch curves to make the outline of a snowflake.
-
-Solution: \url{http://thinkpython2.com/code/koch.py}.
-
-\item The Koch curve can be generalized in several ways.  See
-\url{http://en.wikipedia.org/wiki/Koch_snowflake} for examples and
-implement your favorite.
-
-\end{enumerate}
-\end{exercise}
-
-
 \chapter{Fruitful functions}
 \label{fruitchap}
 
@@ -5293,7 +4498,6 @@ See \url{http://en.wikipedia.org/wiki/Ackermann_function}.
 Write a function named {\tt ack} that evaluates the Ackermann function.
 Use your function to evaluate {\tt ack(3, 4)}, which should be 125.
 What happens for larger values of {\tt m} and {\tt n}?
-Solution: \url{http://thinkpython2.com/code/ackermann.py}.
 \index{Ackermann function}
 \index{function!ack}
 
@@ -5338,8 +4542,6 @@ and {\tt False} otherwise.  Remember that you can use the
 built-in function {\tt len} to check the length of a string.
 
 \end{enumerate}
-
-Solution: \url{http://thinkpython2.com/code/palindrome_soln.py}.
 
 \end{exercise}
 
@@ -5939,8 +5141,6 @@ to compute and return an estimate of $\pi$.  It should use a {\tt while}
 loop to compute terms of the summation until the last term is
 smaller than {\tt 1e-15} (which is Python notation for $10^{-15}$).
 You can check the result by comparing it to {\tt math.pi}.
-
-Solution: \url{http://thinkpython2.com/code/pi.py}.
 
 \end{exercise}
 
@@ -6800,8 +6000,521 @@ beware: the numeric codes for upper case letters are different.
 
 Potentially offensive jokes on the Internet are sometimes encoded in
 ROT13, which is a Caesar cypher with rotation 13.  If you are not
-easily offended, find and decode some of them.  Solution:
-\url{http://thinkpython2.com/code/rotate.py}.
+easily offended, find and decode some of them.
+
+\end{exercise}
+
+\chapter{ITSE-1402 - Introductory Review}
+
+This chapter is a custom one containing select exercises from the
+previous chapters. We will go over these exercises at the beginning 
+of the class to reinforce prerequesite knowledge. At this point in 
+time, the exercises and information contained here is that which was 
+already presented in chapters 1-7. If you are using this book outside  
+of the class and have read through those chapters, you may skip this 
+chapter without regard.
+
+\section{Pre-Requesite Topics}
+Going into ITSE-1402, there are certain topics which you are expected 
+to know. These are covered for the most part in Chapters 1-7, but see
+the list below for a summarized reference:
+
+\begin{itemize}
+
+\item Operators
+\item Variable Assignment/Types
+\item String Manipulation (including formatting)
+\item Boolean Expressions
+\item Basic Understanding of Modules
+\item Conditionals
+\item Recursion
+\item Functions
+\item Iteration
+
+\end{itemize}
+
+We will be reviewing these with a series of select exercises from the
+previous chapters. If you are taking the class, these will be gone over
+the first day in class and do not need to be completed at this point in
+time. 
+
+\section{Exercises}
+
+For all code that is done in class, we will be using a GitHub repository
+to maintain it. Every set of exercises moving forward will have a link at
+beginning of the section that will create the associated repository for
+you and provide you with the files you need. The first step you should
+always do is access the link provided since you will need the repo and
+associated files to turn in the assignment.
+
+Python Review Repository: \url{https://coder.run/1402-review}
+\\
+\\
+\begin{exercise}
+Whenever you are experimenting with a new feature, you should try
+to make mistakes.  For example, in the ``Hello, world!'' program,
+what happens if you leave out one of the quotation marks?  What
+if you leave out both?  What if you spell {\tt print} wrong?
+\index{error message}
+
+This kind of experiment helps you remember what you read; it also
+helps when you are programming, because you get to know what the error
+messages mean.  It is better to make mistakes now and on purpose than
+later and accidentally.
+
+\begin{enumerate}
+
+\item In a print statement, what happens if you leave out one
+of the parentheses, or both?
+
+\item If you are trying to print a string, what happens if you
+leave out one of the quotation marks, or both?
+
+\item You can use a minus sign to make a negative number like
+{\tt -2}.  What happens if you put a plus sign before a number?
+What about {\tt 2++2}?
+
+\item In math notation, leading zeros are ok, as in {\tt 02}.
+What happens if you try this in Python?
+
+\item What happens if you have two values with no operator
+between them?
+
+\end{enumerate}
+
+\end{exercise}
+
+
+\begin{exercise}
+
+\begin{itemize}
+
+\item We've seen that {\tt n = 42} is legal.  What about {\tt 42 = n}?
+
+\item How about {\tt x = y = 1}?
+
+\item In some languages every statement ends with a semi-colon, {\tt ;}.
+What happens if you put a semi-colon at the end of a Python statement?
+
+\item What if you put a period at the end of a statement?
+
+\item In math notation you can multiply $x$ and $y$ like this: $x y$.
+What happens if you try that in Python?
+
+\end{itemize}
+
+\end{exercise}
+
+
+\begin{exercise}
+\index{len function}
+\index{function!len}
+
+Write a function named \verb"right_justify" that takes a string
+named {\tt s} as a parameter and prints the string with enough
+leading spaces so that the last letter of the string is in column 70
+of the display.
+
+\begin{verbatim}
+>>> right_justify('monty')
+                                                                 monty
+\end{verbatim}
+
+Hint: Use string concatenation and repetition.  Also,
+Python provides a built-in function called {\tt len} that
+returns the length of a string, so the value of \verb"len('monty')" is 5.
+
+\end{exercise}
+
+
+\begin{exercise}
+\index{function object}
+\index{object!function}
+
+A function object is a value you can assign to a variable
+or pass as an argument.  For example, \verb"do_twice" is a function
+that takes a function object as an argument and calls it twice:
+
+\begin{verbatim}
+def do_twice(f):
+    f()
+    f()
+\end{verbatim}
+
+Here's an example that uses \verb"do_twice" to call a function
+named \verb"print_spam" twice.
+
+\begin{verbatim}
+def print_spam():
+    print('spam')
+
+do_twice(print_spam)
+\end{verbatim}
+
+\begin{enumerate}
+
+\item Type this example into a script and test it.
+
+\item Modify \verb"do_twice" so that it takes two arguments, a
+function object and a value, and calls the function twice,
+passing the value as an argument.
+
+\item Copy the definition of 
+\verb"print_twice" from earlier in this chapter to your script.
+
+\item Use the modified version of \verb"do_twice" to call
+\verb"print_twice" twice, passing \verb"'spam'" as an argument.
+
+\item Define a new function called 
+\verb"do_four" that takes a function object and a value
+and calls the function four times, passing the value
+as a parameter.  There should be only
+two statements in the body of this function, not four.
+
+\end{enumerate}
+
+\end{exercise}
+
+
+\begin{exercise}
+
+Note: This exercise should be
+done using only the statements and other features we have learned so
+far.  
+
+\begin{enumerate}
+
+\item Write a function that draws a grid like the following:
+\index{grid}
+
+\begin{verbatim}
++ - - - - + - - - - +
+|         |         |
+|         |         |
+|         |         |
+|         |         |
++ - - - - + - - - - +
+|         |         |
+|         |         |
+|         |         |
+|         |         |
++ - - - - + - - - - +
+\end{verbatim}
+%
+Hint: to print more than one value on a line, you can print
+a comma-separated sequence of values:
+
+\begin{verbatim}
+print('+', '-')
+\end{verbatim}
+%
+By default, {\tt print} advances to the next line, but you
+can override that behavior and put a space at the end, like this:
+
+\begin{verbatim}
+print('+', end=' ')
+print('-')
+\end{verbatim}
+%
+The output of these statements is \verb"'+ -'" on the same line.
+The output from the next print statement would begin on the next line.
+
+\item Write a function that draws a similar grid
+with four rows and four columns.
+
+\end{enumerate}
+
+\end{exercise}
+
+\begin{exercise}
+
+The {\tt time} module provides a function, also named {\tt time}, that
+returns the current Greenwich Mean Time in ``the epoch'', which is
+an arbitrary time used as a reference point.  On UNIX systems, the
+epoch is 1 January 1970.
+
+\begin{verbatim}
+>>> import time
+>>> time.time()
+1437746094.5735958
+\end{verbatim}
+
+Write a script that reads the current time and converts it to
+a time of day in hours, minutes, and seconds, plus the number of
+days since the epoch.
+
+\end{exercise}
+
+
+\begin{exercise}
+\index{Fermat's Last Theorem}
+
+Fermat's Last Theorem says that there are no positive integers
+$a$, $b$, and $c$ such that
+
+\[ a^n + b^n = c^n \]
+%
+for any values of $n$ greater than 2.
+
+\begin{enumerate}
+
+\item Write a function named \verb"check_fermat" that takes four
+parameters---{\tt a}, {\tt b}, {\tt c} and {\tt n}---and
+checks to see if Fermat's theorem holds.  If
+$n$ is greater than 2 and 
+
+\[a^n + b^n = c^n \]
+%
+the program should print, ``Holy smokes, Fermat was wrong!''
+Otherwise the program should print, ``No, that doesn't work.''
+
+\item Write a function that prompts the user to input values
+for {\tt a}, {\tt b}, {\tt c} and {\tt n}, converts them to
+integers, and uses \verb"check_fermat" to check whether they
+violate Fermat's theorem.
+
+\end{enumerate}
+
+\end{exercise}
+
+
+\begin{exercise}
+\index{triangle}
+
+If you are given three sticks, you may or may not be able to arrange
+them in a triangle.  For example, if one of the sticks is 12 inches
+long and the other two are one inch long, you will
+not be able to get the short sticks to meet in the middle.  For any
+three lengths, there is a simple test to see if it is possible to form
+a triangle:
+
+\begin{quotation}
+If any of the three lengths is greater than the sum of the other
+  two, then you cannot form a triangle.  Otherwise, you
+  can.  (If the sum of two lengths equals the third, they form
+    what is called a ``degenerate'' triangle.)
+\end{quotation}
+
+\begin{enumerate}
+
+\item Write a function named \verb"is_triangle" that takes three
+  integers as arguments, and that prints either ``Yes'' or ``No'', depending
+  on whether you can or cannot form a triangle from sticks with the
+  given lengths.
+
+\item Write a function that prompts the user to input three stick
+  lengths, converts them to integers, and uses \verb"is_triangle" to
+  check whether sticks with the given lengths can form a triangle.
+
+\end{enumerate}
+
+\end{exercise}
+
+
+\begin{exercise}
+What is the output of the following program?
+Draw a stack diagram that shows the state of the program
+when it prints the result.
+
+\begin{verbatim}
+def recurse(n, s):
+    if n == 0:
+        print(s)
+    else:
+        recurse(n-1, n+s)
+
+recurse(3, 0)
+\end{verbatim}
+
+\begin{enumerate}
+
+\item What would happen if you called this function like this: {\tt
+  recurse(-1, 0)}?
+
+\item Write a docstring that explains everything someone would need to
+  know in order to use this function (and nothing else).
+
+\end{enumerate}
+
+\end{exercise}
+
+\begin{exercise}
+\label{palindrome}
+
+A palindrome is a word that is spelled the same backward and
+forward, like ``noon'' and ``redivider''.  Recursively, a word
+is a palindrome if the first and last letters are the same
+and the middle is a palindrome.
+\index{palindrome}
+
+The following are functions that take a string argument and
+return the first, last, and middle letters:
+
+\begin{verbatim}
+def first(word):
+    return word[0]
+
+def last(word):
+    return word[-1]
+
+def middle(word):
+    return word[1:-1]
+\end{verbatim}
+%
+We'll see how they work in Chapter~\ref{strings}.
+
+\begin{enumerate}
+
+\item Type these functions into a file named {\tt palindrome.py}
+and test them out.  What happens if you call {\tt middle} with
+a string with two letters?  One letter?  What about the empty
+string, which is written \verb"''" and contains no letters?
+
+\item Write a function called \verb"is_palindrome" that takes
+a string argument and returns {\tt True} if it is a palindrome
+and {\tt False} otherwise.  Remember that you can use the
+built-in function {\tt len} to check the length of a string.
+
+\end{enumerate}
+
+\end{exercise}
+
+
+\begin{exercise}
+
+A number, $a$, is a power of $b$ if it is divisible by $b$
+and $a/b$ is a power of $b$.  Write a function called
+\verb"is_power" that takes parameters {\tt a} and {\tt b}
+and returns {\tt True} if {\tt a} is a power of {\tt b}.
+Note: you will have to think about the base case.
+
+\end{exercise}
+
+
+\begin{exercise}
+\index{greatest common divisor (GCD)}
+\index{GCD (greatest common divisor)}
+
+The greatest common divisor (GCD) of $a$ and $b$ is the largest number
+that divides both of them with no remainder.  
+
+One way to find the GCD of two numbers is based on the observation
+that if $r$ is the remainder when $a$ is divided by $b$, then $gcd(a,
+b) = gcd(b, r)$.  As a base case, we can use $gcd(a, 0) = a$.
+
+Write a function called
+\verb"gcd" that takes parameters {\tt a} and {\tt b}
+and returns their greatest common divisor.
+
+Credit: This exercise is based on an example from Abelson and
+Sussman's {\em Structure and Interpretation of Computer Programs}.
+
+\end{exercise}
+
+
+\begin{exercise}
+\index{eval function}
+\index{function!eval}
+
+The built-in function {\tt eval} takes a string and evaluates
+it using the Python interpreter.  For example:
+
+\begin{verbatim}
+>>> eval('1 + 2 * 3')
+7
+>>> import math
+>>> eval('math.sqrt(5)')
+2.2360679774997898
+>>> eval('type(math.pi)')
+<class 'float'>
+\end{verbatim}
+%
+Write a function called \verb"eval_loop" that iteratively
+prompts the user, takes the resulting input and evaluates
+it using {\tt eval}, and prints the result.
+
+It should continue until the user enters \verb"'done'", and then
+return the value of the last expression it evaluated.
+
+\end{exercise}
+
+
+\begin{exercise}
+\index{count method}
+\index{method!count}
+
+There is a string method called {\tt count} that is similar
+to the function in Section~\ref{counter}.  Read the documentation
+of this method
+and write an invocation that counts the number of {\tt a}'s
+in \verb"'banana'".
+\end{exercise}
+
+
+\begin{exercise}
+\index{step size}
+\index{slice operator}
+\index{operator!slice}
+
+A string slice can take a third index that specifies the ``step
+size''; that is, the number of spaces between successive characters.
+A step size of 2 means every other character; 3 means every third,
+etc.
+
+\begin{verbatim}
+>>> fruit = 'banana'
+>>> fruit[0:5:2]
+'bnn'
+\end{verbatim}
+
+A step size of -1 goes through the word backwards, so
+the slice \verb"[::-1]" generates a reversed string.
+\index{palindrome}
+
+Use this idiom to write a one-line version of \verb"is_palindrome"
+from Exercise~\ref{palindrome}.
+\end{exercise}
+
+
+\begin{exercise}
+\index{letter rotation}
+\index{rotation, letter}
+
+\label{exrotate}
+A Caesar cypher is a weak form of encryption that involves ``rotating'' each
+letter by a fixed number of places.  To rotate a letter means
+to shift it through the alphabet, wrapping around to the beginning if
+necessary, so 'A' rotated by 3 is 'D' and 'Z' rotated by 1 is 'A'.
+
+To rotate a word, rotate each letter by the same amount.
+For example, ``cheer'' rotated by 7 is ``jolly'' and ``melon'' rotated
+by -10 is ``cubed''.  In the movie {\em 2001: A Space Odyssey}, the 
+ship computer is called HAL, which is IBM rotated by -1.
+
+%For example ``sleep''
+%rotated by 9 is ``bunny'' and ``latex'' rotated by 7 is ``shale''.
+
+Write a function called \verb"rotate_word"
+that takes a string and an integer as parameters, and returns
+a new string that contains the letters from the original string
+rotated by the given amount.  
+
+You might want to use the built-in function {\tt ord}, which converts
+a character to a numeric code, and {\tt chr}, which converts numeric
+codes to characters.  Letters of the alphabet are encoded in alphabetical
+order, so for example:
+
+\begin{verbatim}
+>>> ord('c') - ord('a')
+2
+\end{verbatim}
+
+Because \verb"'c'" is the two-eth letter of the alphabet.  But
+beware: the numeric codes for upper case letters are different.
+
+Potentially offensive jokes on the Internet are sometimes encoded in
+ROT13, which is a Caesar cypher with rotation 13.  If you are not
+easily offended, find and decode some of them.
 
 \end{exercise}
 
@@ -6898,90 +6611,6 @@ for line in fin:
     print(word)
 \end{verbatim}
 %
-
-\section{Exercises}
-
-There are solutions to these exercises in the next section.
-You should at least attempt each one before you read the solutions.
-
-\begin{exercise}
-Write a program that reads {\tt words.txt} and prints only the
-words with more than 20 characters (not counting whitespace).
-\index{whitespace}
-
-\end{exercise}
-
-\begin{exercise}
-
-In 1939 Ernest Vincent Wright published a 50,000 word novel called
-{\em Gadsby} that does not contain the letter ``e''.  Since ``e'' is
-the most common letter in English, that's not easy to do.
-
-In fact, it is difficult to construct a solitary thought without using
-that most common symbol.  It is slow going at first, but with caution
-and hours of training you can gradually gain facility.
-
-All right, I'll stop now.
-
-Write a function called \verb"has_no_e" that returns {\tt True} if
-the given word doesn't have the letter ``e'' in it.
-
-Modify your program from the previous section to print only the words
-that have no ``e'' and compute the percentage of the words in the list
-that have no ``e''.
-\index{lipogram}
-
-\end{exercise}
-
-
-\begin{exercise} 
-
-Write a function named {\tt avoids}
-that takes a word and a string of forbidden letters, and
-that returns {\tt True} if the word doesn't use any of the forbidden
-letters.
-
-Modify your program to prompt the user to enter a string
-of forbidden letters and then print the number of words that
-don't contain any of them.
-Can you find a combination of 5 forbidden letters that
-excludes the smallest number of words?
-
-\end{exercise}
-
-
-
-\begin{exercise}
-
-Write a function named \verb"uses_only" that takes a word and a
-string of letters, and that returns {\tt True} if the word contains
-only letters in the list.  Can you make a sentence using only the
-letters {\tt acefhlo}?  Other than ``Hoe alfalfa?''
-
-\end{exercise}
-
-
-\begin{exercise} 
-
-Write a function named \verb"uses_all" that takes a word and a
-string of required letters, and that returns {\tt True} if the word
-uses all the required letters at least once.  How many words are there
-that use all the vowels {\tt aeiou}?  How about {\tt aeiouy}?
-
-\end{exercise}
-
-
-\begin{exercise}
-
-Write a function called \verb"is_abecedarian" that returns
-{\tt True} if the letters in a word appear in alphabetical order
-(double letters are ok).  
-How many abecedarian words are there?
-
-\index{abecedarian}
-
-\end{exercise}
-
 
 
 \section{Search}
@@ -7236,6 +6865,85 @@ show their absence!
 
 \section{Exercises}
 
+Chapter 9 Repository: \url{https://coder.run/1402-chap9}
+\\
+\\
+\begin{exercise}
+
+Write a program that reads {\tt words.txt} and prints only the
+words with more than 20 characters (not counting whitespace).
+\index{whitespace}
+
+\end{exercise}
+
+
+\begin{exercise}
+
+In 1939 Ernest Vincent Wright published a 50,000 word novel called
+{\em Gadsby} that does not contain the letter ``e''.  Since ``e'' is
+the most common letter in English, that's not easy to do.
+
+In fact, it is difficult to construct a solitary thought without using
+that most common symbol.  It is slow going at first, but with caution
+and hours of training you can gradually gain facility.
+
+All right, I'll stop now.
+
+1. Write a function \verb"has_no_e" that returns True if the given word
+doesn't have the letter ``e'' in it. Use the function to create a list of only the
+words that have no ``e''. Then compute the percentage of words that have no ``e''.
+Return these as objects in a list ``answer''.
+\index{lipogram}
+
+\end{exercise}
+
+
+\begin{exercise} 
+
+1. Write a function named {\tt avoids}
+that takes a word and a string of forbidden letters, and
+that returns {\tt True} if the word doesn't use any of the forbidden
+letters.
+
+2. Write a function named 'lowest\_avoidance' that calculates
+the 5 letters that excludes the fewest number of words and 
+returns them in a list.
+
+\end{exercise}
+
+
+\begin{exercise}
+
+Write a function named \verb"uses_only" that takes a word and a
+string of letters,and that returns {\tt True} if the word contains
+only letters in the list.
+
+\end{exercise}
+
+
+\begin{exercise} 
+
+1. Write a function named \verb"uses_all" that takes a word and a
+string of required letters, and that returns {\tt True} if the word
+uses all the required letters at least once.
+
+2. How many words are there that use all the vowels aeiou? How about
+aeiouy?
+
+\end{exercise}
+
+
+\begin{exercise}
+
+Write a function called \verb"is_abecedarian" that returns
+{\tt True} if the letters in a word appear in alphabetical order
+(double letters are ok).
+
+\index{abecedarian}
+
+\end{exercise}
+
+
 \begin{exercise}
 \index{Car Talk}
 \index{Puzzler}
@@ -7257,7 +6965,6 @@ think of one. What is the word?
 \end{quote}
 
 Write a program to find it.
-Solution: \url{http://thinkpython2.com/code/cartalk1.py}.
 
 \end{exercise}
 
@@ -7291,7 +6998,6 @@ all 6 were palindromic!
 
 Write a Python program that tests all the six-digit numbers and prints
 any numbers that satisfy these requirements.  
-Solution: \url{http://thinkpython2.com/code/cartalk2.py}.
 
 \end{exercise}
 
@@ -7320,8 +7026,6 @@ happened 8 times over all. So the question is, how old am I now?''
 
 Write a Python program that searches for solutions to this Puzzler.
 Hint: you might find the string method {\tt zfill} useful.
-
-Solution: \url{http://thinkpython2.com/code/cartalk3.py}.
 
 \end{exercise}
 
@@ -8365,9 +8069,9 @@ string should be split.
 
 \section{Exercises}
 
-You can download solutions to these exercises from
-\url{http://thinkpython2.com/code/list_exercises.py}.
-
+Chapter 10 Repository: \url{https://coder.run/1402-chap10}
+\\
+\\
 \begin{exercise}
 
 Write a function called \verb"nested_sum" that takes a list of lists
@@ -8484,9 +8188,6 @@ with the {\tt randint} function in the {\tt random} module.
 \index{randint function}
 \index{function!randint}
 
-You can download my
-solution from \url{http://thinkpython2.com/code/birthday.py}.
-
 \end{exercise}
 
 
@@ -8503,7 +8204,6 @@ this function, one using the {\tt append} method and the
 other using the idiom {\tt t = t + [x]}.  Which one takes
 longer to run?  Why?
 
-Solution: \url{http://thinkpython2.com/code/wordlist.py}.
 \index{time module}
 \index{module!time}
 
@@ -8543,7 +8243,7 @@ in the list and {\tt False} if it's not.
 \index{module!bisect}
 
 Or you could read the documentation of the {\tt bisect} module
-and use that!  Solution: \url{http://thinkpython2.com/code/inlist.py}.
+and use that!
 
 \end{exercise}
 
@@ -8552,7 +8252,7 @@ and use that!  Solution: \url{http://thinkpython2.com/code/inlist.py}.
 
 Two words are a ``reverse pair'' if each is the reverse of the
 other.  Write a program that finds all the reverse pairs in the
-word list.  Solution: \url{http://thinkpython2.com/code/reverse_pair.py}.
+word list.
 
 \end{exercise}
 
@@ -8562,8 +8262,6 @@ word list.  Solution: \url{http://thinkpython2.com/code/reverse_pair.py}.
 Two words ``interlock'' if taking alternating letters from each forms
 a new word.  For example, ``shoe'' and ``cold''
 interlock to form ``schooled''.
-Solution: \url{http://thinkpython2.com/code/interlock.py}.
-Credit: This exercise is inspired by an example at \url{http://puzzlers.org}.
 
 \begin{enumerate}
 
@@ -9385,6 +9083,9 @@ interpreter something about a variable.
 
 \section{Exercises}
 
+Chapter 11 Repository: \url{https://coder.run/1402-chap11}
+\\
+\\
 \begin{exercise}
 \label{wordlist2}
 \index{set membership}
@@ -9408,7 +9109,6 @@ bisection search.
 
 Read the documentation of the dictionary method {\tt setdefault}
 and use it to write a more concise version of \verb"invert_dict".
-Solution: \url{http://thinkpython2.com/code/invert_dict.py}.
 \index{setdefault method}
 \index{method!setdefault}
 
@@ -9419,7 +9119,6 @@ Solution: \url{http://thinkpython2.com/code/invert_dict.py}.
 Memoize the Ackermann function from Exercise~\ref{ackermann} and see if
 memoization makes it possible to evaluate the function with bigger
 arguments.  Hint: no.
-Solution: \url{http://thinkpython2.com/code/ackermann_memo.py}.
 \index{Ackermann function}
 \index{function!ack}
 
@@ -9437,7 +9136,6 @@ that appears more than once in the list.
 
 Use a dictionary to write a faster, simpler version of
 \verb"has_duplicates". 
-Solution: \url{http://thinkpython2.com/code/has_duplicates.py}.
 
 \end{exercise}
 
@@ -9451,7 +9149,7 @@ Two words are ``rotate pairs'' if you can rotate one of them
 and get the other (see \verb"rotate_word" in Exercise~\ref{exrotate}).
 
 Write a program that reads a wordlist and finds all the rotate
-pairs.  Solution: \url{http://thinkpython2.com/code/rotate_pairs.py}.
+pairs.
 
 \end{exercise}
 
@@ -9503,7 +9201,6 @@ returns a Python dictionary that maps from each word to a string that
 describes its primary pronunciation.
 
 Write a program that lists all the words that solve the Puzzler.
-Solution: \url{http://thinkpython2.com/code/homophone.py}.
 
 \end{exercise}
 
@@ -10247,14 +9944,16 @@ wrong shape; that is, the wrong type or size.
 
 \section{Exercises}
 
+Chapter 12 Repository: \url{https://coder.run/1402-chap12}
+\\
+\\
 \begin{exercise}
 
 Write a function called \verb"most_frequent" that takes a string and
 prints the letters in decreasing order of frequency.  Find text
 samples from several different languages and see how letter frequency
 varies between languages.  Compare your results with the tables at
-\url{http://en.wikipedia.org/wiki/Letter_frequencies}.  Solution:
-\url{http://thinkpython2.com/code/most_frequent.py}.  \index{letter
+\url{http://en.wikipedia.org/wiki/Letter_frequencies}. \index{letter
   frequency} \index{frequency!letter}
 
 \end{exercise}
@@ -10300,8 +9999,6 @@ Hint: there are seven.
 % (7, ['angriest', 'astringe', 'ganister', 'gantries', 'granites',
 % 'ingrates', 'rangiest'])
 
-Solution: \url{http://thinkpython2.com/code/anagram_sets.py}.
-
 \end{enumerate}
 \end{exercise}
 
@@ -10312,9 +10009,7 @@ Two words form a ``metathesis pair'' if you can transform one into the
 other by swapping two letters; for example, ``converse'' and
 ``conserve''.  Write a program that finds all of the metathesis pairs
 in the dictionary.  Hint: don't test all pairs of words, and don't
-test all possible swaps.  Solution:
-\url{http://thinkpython2.com/code/metathesis.py}.  Credit: This
-exercise is inspired by an example at \url{http://puzzlers.org}.
+test all possible swaps.
 
 \end{exercise}
 
@@ -10374,8 +10069,6 @@ to memoize the words that are known to be reducible.
 
 \end{enumerate}
 
-Solution: \url{http://thinkpython2.com/code/reducible.py}.
-
 \end{exercise}
 
 
@@ -10404,9 +10097,9 @@ you think about choosing data structures and practice using them.
 \section{Word frequency analysis}
 \label{analysis}
 
-As usual, you should at least attempt the exercises
-before you read my solutions.
-
+Chapter 13 Repository: \url{https://coder.run/1402-chap13}
+\\
+\\
 \begin{exercise}
 
 Write a program that reads a file, breaks each line into
@@ -10814,8 +10507,7 @@ or read the documentation at
 \url{http://docs.python.org/3/library/stdtypes.html#types-set}.
 
 Write a program that uses set subtraction to find words in the book
-that are not in the word list.  Solution:
-\url{http://thinkpython2.com/code/analyze_book2.py}.
+that are not in the word list.
 
 \end{exercise}
 
@@ -10870,8 +10562,7 @@ An alternative is:
 \index{algorithm}
 
 Write a program that uses this algorithm to choose a random word from
-the book.  Solution:
-\url{http://thinkpython2.com/code/analyze_book3.py}.
+the book.
 
 \end{exercise}
 
@@ -11232,10 +10923,6 @@ log $f$ and log $r$.  Use the graphing program of your
 choice to plot the results and check whether they form
 a straight line.  Can you estimate the value of $s$?
 
-Solution: \url{http://thinkpython2.com/code/zipf.py}.
-To run my solution, you need the plotting module {\tt matplotlib}.
-If you installed Anaconda, you already have {\tt matplotlib};
-otherwise you might have to install it.
 \index{matplotlib}
 
 \end{exercise}
@@ -12021,6 +11708,9 @@ a Python program to run commands and read the results.
 
 \section{Exercises}
 
+Chapter 14 Repository: \url{https://coder.run/1402-chap14}
+\\
+\\
 \begin{exercise}
 
 Write a function called {\tt sed} that takes as arguments a pattern string,
@@ -12031,7 +11721,7 @@ should be replaced with the replacement string.
 
 If an error occurs while opening, reading, writing or closing files,
 your program should catch the exception, print an error message, and
-exit.  Solution: \url{http://thinkpython2.com/code/sed.py}.
+exit.
 
 \end{exercise}
 
@@ -12051,7 +11741,6 @@ Write a module that imports \verb"anagram_sets" and provides
 two new functions: \verb"store_anagrams" should store the
 anagram dictionary in a ``shelf''; \verb"read_anagrams" should
 look up a word and return a list of its anagrams.
-Solution: \url{http://thinkpython2.com/code/anagram_db.py}.
 
 \end{exercise}
 
@@ -12087,8 +11776,6 @@ the same checksum, they probably have the same contents.
 
 \end{enumerate}
 
-Solution: \url{http://thinkpython2.com/code/find_duplicates.py}.
-
 \end{exercise}
 
 
@@ -12103,11 +11790,6 @@ built-in types to organize data.  The next step is to learn
 to organize both code and data.  Object-oriented programming is
 a big topic; it will take a few chapters to get there.
 \index{object-oriented programming}
-
-Code examples from this chapter are available from
-\url{http://thinkpython2.com/code/Point1.py}; solutions
-to the exercises are available from
-\url{http://thinkpython2.com/code/Point1_soln.py}.
 
 
 \section{Programmer-defined types}
@@ -12680,6 +12362,9 @@ attributes, and the values of the attributes.
 
 \section{Exercises}
 
+Chapter 15 Repository: \url{https://coder.run/1402-chap15}
+\\
+\\
 \begin{exercise}
 
 Write a definition for a class named {\tt Circle} with attributes
@@ -12702,24 +12387,7 @@ and a Rectangle and returns True if any of the corners of the Rectangle fall
 inside the circle.  Or as a more challenging version, return True if
 any part of the Rectangle falls inside the circle.
 
-Solution: \url{http://thinkpython2.com/code/Circle.py}.
-
 \end{exercise}
-
-
-\begin{exercise}
-
-Write a function called \verb"draw_rect" that takes a Turtle object
-and a Rectangle and uses the Turtle to draw the Rectangle.  See
-Chapter~\ref{turtlechap} for examples using Turtle objects.
-
-Write a function called \verb"draw_circle" that takes a Turtle and
-a Circle and draws the Circle.
-
-Solution: \url{http://thinkpython2.com/code/draw.py}.
-
-\end{exercise}
-
 
 
 \chapter{Classes and functions}
@@ -13130,6 +12798,9 @@ an exception if it fails.
 
 \section{Exercises}
 
+Chapter 16 Repository: \url{https://coder.run/1402-chap16}
+\\
+\\
 Code examples from this chapter are available from
 \url{http://thinkpython2.com/code/Time1.py}; solutions to the
 exercises are available from \url{http://thinkpython2.com/code/Time1_soln.py}.
@@ -13177,8 +12848,6 @@ documentation at \url{http://docs.python.org/3/library/datetime.html}.
 \index{Double Day}
 
 \end{enumerate}
-
-Solution: \url{http://thinkpython2.com/code/double.py}
 
 \end{exercise}
 
@@ -13920,6 +13589,9 @@ the representation of its attributes.
 
 \section{Exercises}
 
+Chapter 17 Repository: \url{https://coder.run/1402-chap17}
+\\
+\\
 \begin{exercise}
 
 Download the code from this chapter from
@@ -13928,8 +13600,7 @@ Download the code from this chapter from
     midnight.  Then modify the methods (and the function
     \verb"int_to_time") to work with the new implementation.  You
     should not have to modify the test code in {\tt main}.  When you
-    are done, the output should be the same as before.  Solution:
-    \url{http://thinkpython2.com/code/Time2_soln.py}.
+    are done, the output should be the same as before.
 
 \end{exercise}
 
@@ -14722,8 +14393,7 @@ class.
 As an exercise, download my Markov code from
 \url{http://thinkpython2.com/code/markov.py}, and follow the steps
 described above to encapsulate the global variables as attributes of a
-new class called {\tt Markov}.  Solution:
-\url{http://thinkpython2.com/code/Markov.py} (note the capital M).
+new class called {\tt Markov}.
 
 
 \section{Glossary}
@@ -14796,6 +14466,9 @@ that makes the global variables into instance attributes.
 
 \section{Exercises}
 
+Chapter 18 Repository: \url{https://coder.run/1402-chap18}
+\\
+\\
 \begin{exercise}
 For the following program, draw a UML class diagram that shows
 these classes and the relationships among them.
@@ -14920,7 +14593,6 @@ your results to the values at \url{http://en.wikipedia.org/wiki/Hand_rankings}.
 
 \end{enumerate}
 
-Solution: \url{http://thinkpython2.com/code/PokerHandSoln.py}.
 \end{exercise}
 
 
@@ -15664,6 +15336,9 @@ create objects.
 
 \section{Exercises}
 
+Chapter 19 Repository: \url{https://coder.run/1402-chap19}
+\\
+\\
 \begin{exercise}
 
 The following is a function computes the binomial
